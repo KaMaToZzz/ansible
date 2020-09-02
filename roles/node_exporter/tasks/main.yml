@@ -1,6 +1,3 @@
----
-# tasks file for deploy prometheus
-
 - name: Add yum repository
   yum_repository:
     name: prometheus
@@ -9,32 +6,16 @@
     gpgkey: https://packagecloud.io/prometheus-rpm/release/gpgkey
     gpgcheck: no
 
-- name: Install prometheus
-  dnf:
-    name: prometheus2
-    state: present
-
 - name: Install node_exporter
   dnf:
     name: node_exporter
     state: present
-
-- name: enable service prometheus server
-  systemd:
-    name: prometheus
-    enabled: yes
-    masked: no
 
 - name: enable service node_exporter server
   systemd:
     name: node_exporter
     enabled: yes
     masked: no
-
-- name: prometheus server start
-  systemd:
-    state: started
-    name: prometheus
 
 - name: node_exporter server start
   systemd:
@@ -43,15 +24,12 @@
 
 - name: Add port to firewalld
   firewalld:
-    port: "{{ item }}"
+    port: 9100/tcp
     permanent: yes
     state: enabled
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-  loop:
-    - 9090/tcp
-    - 9100/tcp
-
+ 
 - name: reload service firewalld
   systemd:
-    name: firewalld
-    state: reloaded
+   name: firewalld
+   state: reloaded
