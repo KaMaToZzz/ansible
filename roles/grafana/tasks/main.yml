@@ -1,0 +1,38 @@
+---
+# tasks file for deploy grafana
+
+- name: Add yum repository
+  yum_repository:
+    name: grafana
+    description: grafana yum repo
+    baseurl: https://packages.grafana.com/oss/rpm
+    gpgkey: https://packages.grafana.com/gpg.key
+    gpgcheck: no
+
+- name: Install grafana
+  dnf:
+    name: grafana
+    state: present
+
+- name: enable service grafana-server
+  systemd:
+    name: grafana-server
+    enabled: yes
+    masked: no
+
+- name: grafana-server start
+  systemd:
+    state: started
+    name: grafana-server
+
+- name: Add port to firewalld
+  firewalld:
+    port: 3000/tcp
+    permanent: yes
+    state: enabled
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: reload service firewalld
+  systemd:
+    name: firewalld
+    state: reloaded

@@ -1,0 +1,7 @@
+---
+# tasks file for deploy epel repo
+
+- name: Install EPEL Repo
+  dnf:
+    name: epel-release
+    state: present

@@ -1,0 +1,5 @@
+---
+- name: Install Grafana
+  hosts: monitor
+  roles:
+    - grafana
