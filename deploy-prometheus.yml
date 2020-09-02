@@ -1,0 +1,5 @@
+---
+- name: Install Prometheus and node_exporter
+  hosts: monitor
+  roles:
+    - prometheus
