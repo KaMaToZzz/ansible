@@ -1,0 +1,5 @@
+---
+- name: Install soft for work
+  hosts: all
+  roles:
+    - soft

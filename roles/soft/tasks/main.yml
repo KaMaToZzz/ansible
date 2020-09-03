@@ -1,0 +1,20 @@
+---
+# tasks file for deploy soft for work
+
+- name: Install soft
+  dnf:
+    name: "{{ item }}"
+    state: present
+    update_cache: True
+  loop:
+   - nano
+   - mc
+   - htop
+   - unzip
+   - iotop
+   - atop
+   - ionice
+   - net-tools
+   - trafshow
+   - nload
+     
