@@ -33,3 +33,11 @@
   systemd:
    name: firewalld
    state: reloaded
+
+- name: mkdir for textfiles collectors
+  file:
+    path: "/var/lib/node_exporter/textfile_collector/"
+    recurse: yes
+    owner: "prometheus"
+    mode: 0755
+    state: directory
