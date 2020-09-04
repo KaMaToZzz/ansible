@@ -1,0 +1,5 @@
+---
+- name: Upload ssh pub key user
+  hosts: all
+  roles:
+    - sshpubkey

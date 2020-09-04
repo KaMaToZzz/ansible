@@ -1,0 +1,9 @@
+---
+# tasks file for deploy ssh pub key
+
+- copy:
+    src: authorized_keys
+    dest: ~/.ssh/
+    owner: root
+    group: root
+    mode: 0644
