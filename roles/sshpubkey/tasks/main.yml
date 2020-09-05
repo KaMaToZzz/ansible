@@ -7,3 +7,35 @@
     owner: root
     group: root
     mode: 0644
+  tags: sshkey
+
+- copy:
+    src: sshd_config
+    dest: /etc/ssh/
+    owner: root
+    group: root
+    mode: 0600
+  tags: sshconfig
+
+- firewalld:
+    zone: public
+    port: 9122/tcp 
+    permanent: yes
+    state: enabled
+  tags: sshconfig
+
+- firewalld:
+    service: ssh
+    permanent: yes
+    state: disabled
+  tags: sshconfig
+
+- systemd:
+    name: firewalld
+    state: restarted
+  tags: sshconfig
+
+- systemd:
+    name: sshd
+    state: restarted
+  tags: sshconfig
