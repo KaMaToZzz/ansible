@@ -1,0 +1,2 @@
+# node_exporter in /etc/default
+OPTIONS="--collector.textfile.directory /var/lib/node_exporter/textfile_collector"

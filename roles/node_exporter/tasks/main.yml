@@ -19,6 +19,7 @@
     name: node_exporter
     enabled: yes
     masked: no
+    state: started
 
 - name: node_exporter server start
   systemd:
@@ -44,3 +45,11 @@
     owner: "prometheus"
     mode: 0755
     state: directory
+
+- name: copping file node_exporter to /etc/default
+  copy:
+    src: node_exporter
+    dest: /etc/default
+    owner: root
+    group: root
+    mode: 0644
