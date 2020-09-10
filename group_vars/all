@@ -1,5 +1,6 @@
 #gitlab vars
-gitlab_site: "http://{{ ansible_default_ipv4.address }}/gitlab"
+gitlab_site: "some domain"
+gitlab_http_port: "80"
 gitlab_config_dir: "/opt/gitlab/config"
 gitlab_logs_dir: "/opt/gitlab/logs"
 gitlab_data_dir: "/opt/gitlab/data"
@@ -9,3 +10,7 @@ gitlab_smtp_password: "mypassword"
 gitlab_smtp_domain: "example.com"
 gitlab_fullchain: "/etc/letsencrypt/live/git.example.com/fullchain.pem"
 gitlab_cert_key: "/etc/letsencrypt/live/git.example.com/privkey.pem"
+
+#nginx
+nginx_site_available: "/etc/nginx/sites-available/"
+nginx_site_enabled: "/etc/nginx/conf.d/"

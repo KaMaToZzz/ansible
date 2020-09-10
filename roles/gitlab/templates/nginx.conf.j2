@@ -8,8 +8,8 @@ server {
   server_tokens off;
 
 	ssl on;
-  ssl_certificate {{ gitlab_fullchain }};
-  ssl_certificate_key {{ gitlab_cert_key }};
+  #ssl_certificate {{ gitlab_fullchain }};
+  #ssl_certificate_key {{ gitlab_cert_key }};
 
   ssl_stapling on;
   ssl_stapling_verify on;
