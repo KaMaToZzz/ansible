@@ -1,0 +1,48 @@
+---
+# tasks file for deploy gitlab
+
+- name: Install dependencies
+  dnf:
+    name: "{{ item }}"
+    state: present
+    update_cache: True
+  loop:
+   - curl
+   - policycoreutils
+   - openssh-server
+   - postfix
+   - nginx
+   
+- name: Create gitlab directories
+  file: path={{ item }} recurse=yes state=directory
+  with_items:
+    - "{{ gitlab_config_dir }}"
+    - "{{ gitlab_logs_dir }}"
+    - "{{ gitlab_data_dir }}"
+
+- name: Download gitlab installer
+  get_url: url=https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh dest=/tmp/script.rpm.sh
+
+- name: Execute the script.rpm.sh
+  shell: /tmp/script.rpm.sh
+
+- name: change gitlab external url
+  lineinfile: dest="{{ gitlab_config_dir }}/gitlab.rb" regexp="^# external_url" line="external_url = 'https://{{ gitlab_site }}'" state=present
+
+- name: deploy gitlab configuration
+  template: src=gitlab.rb.j2 dest="{{ gitlab_config_dir }}/gitlab.rb" owner=root group=root mode=0644
+
+- name: deploy gitlab NGINX configuration
+  template: src=nginx.conf.j2 dest=/etc/nginx/sites-available/gitlab.conf owner=root group=root mode=0644
+  tags:
+    - nginx
+
+- name: Enable gitlab NGINX configuration
+  file: src=/etc/nginx/sites-available/gitlab.conf dest=/etc/nginx/sites-enabled/gitlab.conf state=link
+  tags:
+    - nginx
+
+- name: Restart NGINX
+  service: name=nginx state=restarted
+  tags:
+    - nginx
