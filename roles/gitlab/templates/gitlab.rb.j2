@@ -1,6 +1,6 @@
-external_url 'https://{{ gitlab_site }}'
+external_url 'http://{{ gitlab_site }}'
 
-nginx['listen_port'] = 80
+nginx['listen_port'] = {{ gitlab_http_port }}
 nginx['listen_https'] = false
 nginx['proxy_set_headers'] = {
   "X-Forwarded-Proto" => "https",
