@@ -1,4 +1,4 @@
-external_url 'http://{{ gitlab_site }}'
+external_url 'http://{{ gitlab_site }}:{{ gitlab_http_port }}'
 
 nginx['listen_port'] = {{ gitlab_http_port }}
 nginx['listen_https'] = false
