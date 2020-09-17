@@ -1,3 +1,9 @@
+#sshd configs
+ssh_port: "9122"
+
+#node_exporters
+node_exporter_port: "9100"
+
 #gitlab vars
 gitlab_site: "{{ ansible_default_ipv4.address }}"
 gitlab_http_port: "8181"
