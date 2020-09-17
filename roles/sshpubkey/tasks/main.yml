@@ -2,7 +2,7 @@
 # tasks file for deploy ssh pub key
 
 - name: copy auth keys of user
-  templates:  src=authorized_keys.j2 dest=~/.ssh/authorized_keys owner=root group=root mode=0644
+  template: src=authorized_keys.j2 dest=~/.ssh/authorized_keys owner=root group=root mode=0644
   tags: sshkey
 
 - name: copy sshd config
