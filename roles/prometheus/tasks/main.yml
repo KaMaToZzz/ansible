@@ -31,6 +31,10 @@
     enabled: yes
     masked: no
 
+- name: copy config to prometheus
+  template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml owner=root group=root mode=0644
+  tags: deploy_config
+
 - name: prometheus server start
   systemd:
     state: started
