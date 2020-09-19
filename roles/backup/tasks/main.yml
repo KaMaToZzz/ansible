@@ -1,0 +1,24 @@
+---
+# tasks for deploy backup script and adding cron job
+
+- name: mking directory for backup
+  file:
+    path: "/opt/backup"
+    recurse: yes
+    owner: "root"
+    mode: 0644
+    state: directory
+
+- name: copy script for cron
+  copy:
+    src: backup.sh
+    dest: /opt/backup
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Creates weekly backup cronjob
+  cron: minute="0" hour="2"
+        name="Making backup on this server"
+        user="root"
+        job="sh /opt/backup/backup.sh"

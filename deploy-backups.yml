@@ -1,0 +1,5 @@
+---
+- name: Deploy backup scripts and cron jobs
+  hosts: all
+  roles:
+    - backup
