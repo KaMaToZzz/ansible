@@ -1,0 +1,4 @@
+#grafana
+
+backupdirs: "/etc /home"
+backupdest: "/opt/backup"

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # What to backup.
-backup_files="/home /etc"
+backup_files="{{ backupdirs }}"
 
 # Where to backup to.
-dest="/opt/backup"
+dest="{{ backupdest }}"
 
 # Create archive filename.
 day=$(date +%d-%m-%y)

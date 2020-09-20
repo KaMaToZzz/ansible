@@ -9,13 +9,13 @@
     mode: 0644
     state: directory
 
+- name: Touch a file for metriks
+  file:
+    path: /var/lib/node_exporter/textfile_collector/backups.prom
+    state: touch
+
 - name: copy script for cron
-  copy:
-    src: backup.sh
-    dest: /opt/backup
-    owner: root
-    group: root
-    mode: 0644
+  template: src=backup.sh.j2 dest=/opt/backup/backup.sh owner=root group=root mode=0644
 
 - name: Creates weekly backup cronjob
   cron: minute="0" hour="2"
