@@ -14,9 +14,9 @@ archive_file="$hostname-$day.tgz"
 # Backup the files using tar.
 tar czf $dest/$archive_file $backup_files
 
-# Long listing of files in $dest to check file sizes.
-filesize=$(ls -lh /opt/backup/grafana-19-09-20.tgz | awk '{ print $5}')
+# Long listing of files in $filesize to check file sizes.
+filesize=$(du -k "$dest/$archive_file" | cut -f1)
 
 # metriks for prometheus
-echo "# HELP backup_filename The name of backupfile with date\n# TYPE backup_filename \n" >> /var/lib/node_exporter/textfile_collector/backups.prom
-echo backup_filename{group=nodes, type=backup} $filesize >> /var/lib/node_exporter/textfile_collector/backups.prom
+(echo -e '# HELP backup_filesize The name of backupfile with size\n# TYPE backup_filesize') > /var/lib/node_exporter/textfile_collector/backups.prom
+(echo 'backup_filesize{group="nodes", type="backup"}' $filesize) >> /var/lib/node_exporter/textfile_collector/backups.prom
