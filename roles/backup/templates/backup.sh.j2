@@ -1,5 +1,9 @@
 #!/bin/bash
 
+timestamp=$(date +%s)
+
+startt=$(date +%H%M)
+
 # What to backup.
 backup_files="{{ backupdirs }}"
 
@@ -14,9 +18,14 @@ archive_file="$hostname-$day.tgz"
 # Backup the files using tar.
 tar czf $dest/$archive_file $backup_files
 
+endt=$(date +%H%M)
+executiont=$(($endt-$startt))
+
 # Long listing of files in $filesize to check file sizes.
 filesize=$(du -k "$dest/$archive_file" | cut -f1)
 
 # metriks for prometheus
-(echo -e '# HELP backup_filesize The name of backupfile with size\n# TYPE backup_filesize') > /var/lib/node_exporter/textfile_collector/backups.prom
+(echo -e '# HELP backup_filesize The name of backupfile with size\n# TYPE backup_filesize gauge') > /var/lib/node_exporter/textfile_collector/backups.prom
 (echo 'backup_filesize{group="nodes", type="backup"}' $filesize) >> /var/lib/node_exporter/textfile_collector/backups.prom
+(echo -e '# HELP backup_executiont The name of backupfile with size\n# TYPE backup_executiont gauge') >> /var/lib/node_exporter/textfile_collector/backups.prom
+(echo 'backup_executiont{group="nodes", type="backup"}' $executiont) >> /var/lib/node_exporter/textfile_collector/backups.prom

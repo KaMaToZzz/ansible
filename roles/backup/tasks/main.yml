@@ -16,6 +16,7 @@
 
 - name: copy script for cron
   template: src=backup.sh.j2 dest=/opt/backup/backup.sh owner=root group=root mode=0644
+  tags: deploy_script
 
 - name: Creates weekly backup cronjob
   cron: minute="0" hour="2"
